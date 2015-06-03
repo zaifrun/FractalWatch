@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/org/pondar/fractalwatch/ColouringScheme.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/org/pondar/fractalwatch/CreateFractalTask.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/org/pondar/fractalwatch/DefaultColouringScheme.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/org/pondar/fractalwatch/GameView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/org/pondar/fractalwatch/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/rect.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/round.xml" charset="UTF-8" />
+  </component>
+</project>
