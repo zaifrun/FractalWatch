@@ -53,11 +53,6 @@ public class GameView extends View{
 	@Override
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-
-		System.out.println("In onFinishInflate");
-		System.out.println("w: "+w+", h : "+h);
-		
-		
 	}
 	
 	@Override
@@ -237,20 +232,16 @@ public class GameView extends View{
 
 	public GameView(Context context) {
 		super(context);
-		//setWillNotDraw(false);
-
 	}
 	
 	public GameView(Context context, AttributeSet attrs)
 	{
 		super(context,attrs);
-		//setWillNotDraw(false);
 	}
 	
 	public GameView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context,attrs,defStyleAttr);
-		//setWillNotDraw(false);
 	}
 	
 
