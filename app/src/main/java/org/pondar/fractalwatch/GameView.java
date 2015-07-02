@@ -205,8 +205,6 @@ public class GameView extends View{
 	@Override
 	protected void onDraw(Canvas canvas) {
 
-		Paint paint = new Paint();
-		paint.setARGB(100,255,0,0);
 		  if (canvas.isHardwareAccelerated())
 		  {
 			 // System.out.println("Canvas is hardware accelerated");
