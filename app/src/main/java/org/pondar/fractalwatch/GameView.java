@@ -20,6 +20,7 @@ public class GameView extends View{
 	private boolean isZooming = false;
 	private int taskStarted = 0;
 	Activity activity;
+
 	boolean isRound;
 	
 	public boolean isRound()
@@ -31,12 +32,10 @@ public class GameView extends View{
 	public WindowInsets onApplyWindowInsets(WindowInsets insets) {
 		if (insets.isRound())
 		{
-			System.out.println("This is a round watch!!!!!!!!!!!!!!!!!!");
 			this.isRound = true;
 		}
 		else
 		{
-			System.out.println("This is a square watch!!!!!!!!!!!!!!!!!");
 			this.isRound = false;
 		}
 		return super.onApplyWindowInsets(insets);
@@ -57,9 +56,7 @@ public class GameView extends View{
 	
 	@Override
 	public void invalidate() {
-		//System.out.println("In invalidate view!!!");
 		super.invalidate();
-		
 	}
 	
 	public void toogleZoom()
@@ -207,10 +204,9 @@ public class GameView extends View{
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		 /* System.out.println("in ondraw");
-		  System.out.println("Width = "+w);
-		  System.out.println("height = "+h);*/
-		 
+
+		Paint paint = new Paint();
+		paint.setARGB(100,255,0,0);
 		  if (canvas.isHardwareAccelerated())
 		  {
 			 // System.out.println("Canvas is hardware accelerated");
