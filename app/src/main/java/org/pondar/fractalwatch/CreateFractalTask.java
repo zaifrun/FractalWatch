@@ -3,18 +3,22 @@ package org.pondar.fractalwatch;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
+//The task used to create the fractal in the background
 public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 
 	private Bitmap bitmap = null;
 	private GameView view;
 	private int[] xadd;
-	int w,h,halfw,halfh;
+	private int w,h,halfw,halfh;
+	//the area to be examined
+	//in this case from -2 to +1 on the x-axis (real)
+	//and -i to i (imaginary axis) on the y-axis
 	private float xMin = -2;
 	private float yMax = 1; 
 	private float xSpan = 3;
 	private float ySpan = 2;
-	private int maxIter = 30;
-	
+	private int maxIter = 30; //how many iterations to do for each point
+	private boolean isRound;
 	
 	
 	public void setBounds(float xmin, float ymax, float xspan, float yspan)
@@ -24,7 +28,8 @@ public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 		this.xSpan = xspan;
 		this.ySpan = yspan;
 	}
-	
+
+	//Constructor
 	public CreateFractalTask(GameView view,int[] xadd,int w, int h)
 	{
 		this.view = view;
@@ -36,7 +41,9 @@ public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 	}
 	
 	ColouringScheme colourer = new DefaultColouringScheme();
-	
+
+	//determine color of one pixel - is the point inside or
+	//outside of Mandelbrot.
 	int pixelInSet (int xPixel, int yPixel, int maxIterations) {
 		boolean inside = true;
 		int iterationNr;
@@ -75,12 +82,9 @@ public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 	
 	@Override
 	protected void onProgressUpdate(Integer... values) {
-		//System.out.println("progres:"+values[0]);
-		//super.onProgressUpdate(values);
 		if (bitmap!=null)
 		{
-			//view.setBitmap(bitmap);
-			view.invalidate();
+			view.invalidate(); //redraw the view - update is here
 		}
 	}
 	
@@ -89,33 +93,41 @@ public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 	{
 		this.bitmap = bit;
 	}
-	
+
+
 	@Override
-	protected Bitmap doInBackground(Void... params) {
+	protected void onPreExecute() {
+		super.onPreExecute();
 		Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+
 		if (bitmap==null)
 		{
 			bitmap = Bitmap.createBitmap(w, h, conf); // this creates a MUTABLE bitmap
 			view.setBitmap(bitmap);
-		}//create fratal here.
+		}
+
+		isRound = view.isRound();
+	}
+
+	@Override
+	protected Bitmap doInBackground(Void... params) {
+
 		System.out.println("DoInBackGround started: w = "+w+
 			", h = "+h);
 		
     	float[] points = new float[4];
 
     	int halfx = w/2;
-    	System.out.println("Starting loop");
 	    for (int y = 0; y<h/2;y++)
 	    {
 	    	int prog = Math.round(100.0f* (float ) y / (float) (h/2));
-	    	//System.out.println("doing Y:"+y);
 	    	int xstart = halfx-xadd[y];
 	    	int xend = halfx+xadd[y];
-	    	if (view.isRound()==false)
+			//modify for square watch
+	    	if (isRound==false)
 	    	{
 	    		xstart = 0;
 	    		xend = w-1;
-	    		//System.out.println("Doing square fractal!!!!");
 	    	}
 	    	
 	    	for (int x = xstart; x<xend;x++)
@@ -131,12 +143,12 @@ public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 	    		bitmap.setPixel(x, y2-1, color1);
 	    		//canvas.drawPoints(points,paint);  		
 	    	}
+			//for every second line, redraw view
 	    	if (y%2 == 0)
 	    		publishProgress(prog);
 
 	    	
 	    }
-	    System.out.println("Before return");
 	    finishedTask(bitmap);
 		return bitmap;
 	}
@@ -145,13 +157,13 @@ public class CreateFractalTask extends AsyncTask<Void, Integer, Bitmap> {
 	
 	@Override
 	protected void onPostExecute(Bitmap result) {
-		//super.onPostExecute(result);
 		System.out.println("In onPostExecute");
 		view.setBitmap(result);
 		view.invalidate();
 		finishedTask(bitmap);
 	}
-	
+
+	//method to be overwritten as inner method - so empty now
 	protected void finishedTask(Bitmap bitmap)
 	{
 		

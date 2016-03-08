@@ -11,23 +11,27 @@ import android.view.View;
 import android.view.WindowInsets;
 
 public class GameView extends View{
-	
+
+	//width and height
 	private int w = 0, h = 0;
 	private int[] xadd;
 	private Bitmap bitmap = null;
 	private Paint paint = new Paint();
+	//we make the fractal as a taks
 	private CreateFractalTask task = null;
 	private boolean isZooming = false;
 	private int taskStarted = 0;
 	private Activity activity;
 
-	boolean isRound;
+	private boolean isRound;
 	
 	public boolean isRound()
 	{
 		return isRound;
 	}
-	
+
+	//This method can be used to detect if the watch is
+	//round or not
 	@Override
 	public WindowInsets onApplyWindowInsets(WindowInsets insets) {
 		if (insets.isRound())
@@ -78,7 +82,7 @@ public class GameView extends View{
 	
 	public Thread zoomRunner;
 	
-	
+	//Start to do a zoom of the fractal
 	public void startZoom()
 	{
 		isZooming = true;
@@ -92,8 +96,7 @@ public class GameView extends View{
 		final GameView view = this;
 		while (isZooming)
 		{		
-			//if (taskStarted==2) break;
-			if (zoomRunner.isInterrupted()) 
+			if (zoomRunner.isInterrupted())
 				return;
 			if (taskStarted<1)
 			{
@@ -125,15 +128,15 @@ public class GameView extends View{
 				
 			}
 		}
-		
-		System.out.println("out of the loop");
 
 	}
 	
+	//Stop the zoom - after pressing the watch
 	public void stopZoom()
 	{
 		if (isZooming)
 		{
+			//pause the zoom thread
 			zoomRunner.interrupt();
 		}
 		isZooming = false;
@@ -145,8 +148,10 @@ public class GameView extends View{
 		this.bitmap = bitmap;
 	}
 	
-	
-	
+	//This methods is used to improve performance
+	//On a round watch we do not need to calculate
+	//all pixels, as some of them are outside of the
+	//view
 	public void calculateoffsets()
 	{
 		System.out.println("Calculating offsets");
@@ -165,7 +170,7 @@ public class GameView extends View{
 		
 	}
 	
-	
+	//This method is called when the view is created
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -184,7 +189,7 @@ public class GameView extends View{
 	}
 	
 	
-	
+	//experimet - not used
 	public void drawHalfScreens(Canvas canvas,Paint paint)
 	{
 		  int halfx = w/2;
@@ -224,6 +229,9 @@ public class GameView extends View{
 	     
 	}
 
+
+	//The following 3 constructors are neccesary to implement
+	//for the Android View system to initialize the view
 	public GameView(Context context) {
 		super(context);
 	}
