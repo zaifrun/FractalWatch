@@ -15,11 +15,11 @@ public class GameView extends View{
 	private int w = 0, h = 0;
 	private int[] xadd;
 	private Bitmap bitmap = null;
-	Paint paint = new Paint();
+	private Paint paint = new Paint();
 	private CreateFractalTask task = null;
 	private boolean isZooming = false;
 	private int taskStarted = 0;
-	Activity activity;
+	private Activity activity;
 
 	boolean isRound;
 	
